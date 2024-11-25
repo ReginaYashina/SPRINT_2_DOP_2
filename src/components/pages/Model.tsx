@@ -1,34 +1,51 @@
-import {adidasArr} from './Adidas';
+import {adidasArr, AdidasItem} from './Adidas';
 import {useParams} from 'react-router-dom';
+import {pumaArr, PumaItem} from './Puma';
 
+type CurrentModelArrayType = {
+    [key: string]: (AdidasItem[] | PumaItem[])
+}
+const currentModelArray: CurrentModelArrayType = {
+    adidas: adidasArr,
+    puma: pumaArr,
+}
 export const Model = () => {
-    const params = useParams()
-    // const adidasModel = adidasArr.filter(a => a.id === Number(params.id))
-    const adidasModel = adidasArr.find(a => a.id === Number(params.id))
-    console.log(
-        adidasModel
-    )
+
+    const {model, id} = useParams();
+    const currentModel = model
+        ?currentModelArray[model].find(a => a.id === Number(id))
+        : null
+
+    const modelStyles = {
+        display: 'flex',
+        flexDirection: 'column' as const,
+        alignItems: 'center',
+        gap: '20px',
+        padding: '50px 20px'
+    }
+
+    const modelImageStyles = {
+        maxWidth: '300px',
+    }
 
     return (
         <div>
-            {/*<div><img src={adidasModel[0].picture}/></div>*/}
-            {/*<div>{adidasModel[0].model}</div>*/}
-            {/*<div>{adidasModel[0].collection}</div>*/}
-            {/*<div>{adidasModel[0].price}</div>*/}
-
             {
-                adidasModel && <>
-                    <div><img src={adidasModel.picture}/>
-                    </div>
-                    <div>{adidasModel.model}</div>
-                    <div>{adidasModel.collection}</div>
-                    <div>{adidasModel.price}</div>
-                </>
-
+                <div style={modelStyles}>
+                    {currentModel
+                        ? <>
+                            <div>{currentModel.model}</div>
+                            <div>{currentModel.collection}</div>
+                            <div>{currentModel.price}</div>
+                            <div>
+                                <img src={currentModel.picture} style={modelImageStyles}/>
+                            </div>
+                        </>
+                        : <h2>Модель отсутствует</h2>
+                    }
+                </div>
 
             }
-
-
         </div>
     )
         ;

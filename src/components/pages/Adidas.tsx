@@ -36,18 +36,19 @@ export const adidasArr: AdidasItem[] = [
         picture: adidasModel3
     }
 ]
-const wrapperStyles = {
+export const wrapperStyles = {
     display: 'flex',
     justifyContent: 'center',
     gap: '15px'
 }
 
-const imageStyles = {
+export const imageStyles = {
     maxWidth: '300px',
 }
 
 
 export const Adidas = () => {
+
     return (
         <div>
             <h2 style={{textAlign: 'center'}}> ADIDAS</h2>
